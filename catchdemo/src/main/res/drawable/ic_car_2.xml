@@ -1,0 +1,22 @@
+<!--
+  ~ Copyright (C) 2016 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector android:height="24dp" android:viewportHeight="355.9"
+    android:viewportWidth="382.48" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillAlpha="0.3" android:fillColor="#fff"
+        android:pathData="M16.1,0L366.3,0A16.1,16.1 0,0 1,382.5 16.1L382.5,339.8A16.1,16.1 0,0 1,366.3 355.9L16.1,355.9A16.1,16.1 0,0 1,0 339.8L0,16.1A16.1,16.1 0,0 1,16.1 0z" android:strokeAlpha="0.3"/>
+    <path android:fillColor="#fff" android:pathData="M328.6,121.6a16.5,16.5 0,0 0,-4.1 0.5l-14.6,3.7L294.5,90.9c-4.2,-9.4 -15.6,-17.3 -26.8,-18.7L114.6,72.2C103.5,73.7 92,81.5 87.8,90.9l-15.4,34.9L58,122.1a16.4,16.4 0,0 0,-4.1 -0.5c-7.4,0 -12.8,5.3 -12.8,12.6v7.4c0,8.5 7.4,15.4 16.5,15.4h1.1l-2.2,5c-4.3,9.7 -7.8,26.2 -7.8,36.7v69.7c0,8.5 7.4,15.4 16.5,15.4L85.1,283.8c9.1,0 16.5,-6.9 16.5,-15.4L101.7,251.2L280.6,251.2v17.1c0,8.5 7.4,15.4 16.5,15.4L317,283.7c9.1,0 16.5,-6.9 16.5,-15.4L333.5,198.6c0,-10.5 -3.5,-27 -7.8,-36.7l-2.2,-5h1.3c9.1,0 16.5,-6.9 16.5,-15.4L341.4,134.1C341.4,126.8 336,121.6 328.6,121.6ZM84.1,148.3l23.4,-53.1c2.8,-6.3 11,-11.4 18.3,-11.4L256.5,83.9c7.3,0 15.5,5.1 18.3,11.4l23.4,53.1c2.8,6.3 -0.9,11.4 -8.2,11.4L92.3,159.7C85,159.7 81.3,154.6 84.1,148.3ZM137,216.7a6.4,6.4 0,0 1,-6.6 6.2L85.7,222.9a6.4,6.4 0,0 1,-6.6 -6.2L79.1,197a6.4,6.4 0,0 1,6.6 -6.2h44.7A6.4,6.4 0,0 1,137 197ZM302.7,216.7a6.4,6.4 0,0 1,-6.6 6.2L251.4,222.9a6.4,6.4 0,0 1,-6.6 -6.2L244.8,197a6.4,6.4 0,0 1,6.6 -6.2h44.7a6.4,6.4 0,0 1,6.6 6.2Z"/>
+</vector>

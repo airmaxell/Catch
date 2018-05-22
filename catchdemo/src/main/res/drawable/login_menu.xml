@@ -1,0 +1,38 @@
+<!--
+  ~ Copyright (C) 2016 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="1440dp"
+        android:height="2880dp"
+        android:viewportWidth="1440.0"
+        android:viewportHeight="2880.0">
+    <path
+        android:pathData="M306,1363.5L1134,1363.5A15.5,15.5 0,0 1,1149.6 1379L1149.6,2189.3A15.5,15.5 0,0 1,1134 2204.8L306,2204.8A15.5,15.5 0,0 1,290.5 2189.3L290.5,1379A15.5,15.5 0,0 1,306 1363.5z"
+        android:fillAlpha="0.1"
+        android:fillColor="#557c82"
+        android:strokeAlpha="0.1"/>
+    <path
+        android:pathData="M306.7,1363.5L1133.3,1363.5A16.3,16.3 0,0 1,1149.6 1379.8L1149.6,1588.6A16.3,16.3 0,0 1,1133.3 1604.8L306.7,1604.8A16.3,16.3 0,0 1,290.5 1588.6L290.5,1379.8A16.3,16.3 0,0 1,306.7 1363.5z"
+        android:fillAlpha="0.2"
+        android:fillColor="#fff"
+        android:strokeAlpha="0.2"/>
+    <path
+        android:fillColor="#fff"
+        android:pathData="M1103,1493.4v-15.4c0,-8.2 -7.1,-14.9 -15.8,-14.9L992.7,1463.2c-8.7,0 -15.8,6.7 -15.8,14.9v68.4c0,8.2 7.1,14.9 15.8,14.9h94.6c8.7,0 15.8,-6.7 15.8,-14.9v-4.7h-20.6v-8.2L1103,1533.6v-11.3h-20.6L1082.4,1514L1103,1514v-12.3h-20.6v-8.2ZM1045.5,1520.2v10.3c0,2.4 -2.5,4.4 -5.5,4.4s-5.5,-2 -5.5,-4.4v-10.3a12.7,12.7 0,1 1,11 0Z"/>
+    <path
+        android:fillColor="#fff"
+        android:pathData="M1007.1,1442.2a24.8,24.8 0,0 1,24.8 -24.8h16a24.8,24.8 0,0 1,24.8 24.8v17.4h17.6v-22.6a34,34 0,0 0,-34 -34h-32.9a34,34 0,0 0,-34 34v22.6h17.6Z"/>
+</vector>

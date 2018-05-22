@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2016 The Android Open Source Project
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+         http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_camera"
+    android:theme="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".CameraActivity">
+
+    <com.google.android.cameraview.CameraView
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:background="@android:color/black"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/camera_target_smaller_2"/>
+
+
+    <RelativeLayout
+        android:id="@+id/camera_option_bg"
+        android:layout_width="85dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:layout_margin="0dp">
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:alpha="0.8"
+            app:srcCompat="@drawable/ic_camera_button_bg_left"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/camera_option_exterior"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:padding="0dp"
+                android:layout_marginBottom="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                app:backgroundTint="@android:color/transparent"
+                app:srcCompat="@drawable/image_button_exterior_selected"/>
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/camera_option_interior"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:padding="0dp"
+                android:layout_marginBottom="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                app:backgroundTint="@android:color/transparent"
+                app:srcCompat="@drawable/image_button_interior"/>
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/camera_option_details"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:padding="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                app:backgroundTint="@android:color/transparent"
+                app:srcCompat="@drawable/image_button_details"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/camera_button_bg"
+        android:layout_width="85dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:layout_margin="0dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="0dp"
+            android:alpha="0.8"
+            app:srcCompat="@drawable/ic_camera_button_bg_left"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test"/>
+            <TextView
+                android:id="@+id/y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test" />
+            <TextView
+                android:id="@+id/z"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/take_picture"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:padding="4dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            app:backgroundTint="@android:color/transparent"
+            app:srcCompat="@drawable/selector_button_camera"/>
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/btn_gallery"
+            android:layout_width="match_parent"
+            android:layout_below="@id/take_picture"
+            android:layout_height="100dp"
+            android:padding="17dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitXY"
+            app:backgroundTint="@android:color/transparent"
+            app:srcCompat="@drawable/image_button_gallery"/>
+
+
+    </RelativeLayout>
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>

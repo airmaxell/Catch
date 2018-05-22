@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "247732023974",
+    "firebase_url": "https://catch-facdf.firebaseio.com",
+    "project_id": "catch-facdf",
+    "storage_bucket": "catch-facdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247732023974:android:fbb33c6623b9713c",
+        "android_client_info": {
+          "package_name": "com.example.catchdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247732023974-1v5ibe1k02r4987qtj2l29ngqm3ee713.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApBl4C-THVzKIxJFdIk0yMMh0i_GB8ErI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
