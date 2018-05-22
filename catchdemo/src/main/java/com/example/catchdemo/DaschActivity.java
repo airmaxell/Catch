@@ -84,7 +84,7 @@ public class DaschActivity extends AppCompatActivity {
         requests.add(new CarItem("BMW x5 fndas jksnf", "KJFJNS83JNFD83JD"));
         requests.add(new CarItem("BMW 530i jdsf ank", "KF93MFJ38FJ389FJ"));
         requests.add(new CarItem("BMW 530i jdsf ank", "123"));
-        requests.add(new CarItem("BMW 530i jdsf ank", "adsff"));
+        requests.add(new CarItem("BMW 530i jdsf ank", "test_milos"));
 
         GetRequests getRequestsAsyncTask = new GetRequests();
         getRequestsAsyncTask.execute((Void)null);
