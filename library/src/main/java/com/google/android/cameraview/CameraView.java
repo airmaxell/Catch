@@ -19,6 +19,7 @@ package com.google.android.cameraview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -407,6 +408,13 @@ public class CameraView extends FrameLayout {
         mImpl.takePicture();
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+
+    }
+
     private class CallbackBridge implements CameraViewImpl.Callback {
 
         private final ArrayList<Callback> mCallbacks = new ArrayList<>();
@@ -448,6 +456,8 @@ public class CameraView extends FrameLayout {
                 callback.onPictureTaken(CameraView.this, data);
             }
         }
+
+
 
         public void reserveRequestLayoutOnOpen() {
             mRequestLayoutOnOpen = true;

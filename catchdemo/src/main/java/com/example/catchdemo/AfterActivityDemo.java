@@ -44,6 +44,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.zomato.photofilters.imageprocessors.Filter;
+import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubfilter;
+import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubfilter;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -51,6 +55,11 @@ import java.io.FileOutputStream;
 import java.util.Random;
 
 public class AfterActivityDemo extends AppCompatActivity implements View.OnClickListener {
+
+    static
+    {
+        System.loadLibrary("NativeImageProcessor");
+    }
 
     private static final String TAG = "AfterActivvityDemo";
 
@@ -94,7 +103,13 @@ public class AfterActivityDemo extends AppCompatActivity implements View.OnClick
         Log.i(TAG, "---------------------- path = " + maskPath);
 
         picture = loadImageFromStorage(imagePath);
-        mask = loadImageFromStorage(maskPath);
+        mask = null; //loadImageFromStorage(maskPath);
+
+        // apply filter
+        Filter myFilter = new Filter();
+        myFilter.addSubFilter(new BrightnessSubfilter(30));
+        myFilter.addSubFilter(new ContrastSubfilter(1.1f));
+        picture = myFilter.processFilter(picture);
 
         if(mask != null) {
             Log.i(TAG, "---------------------- mask != null");
@@ -109,7 +124,7 @@ public class AfterActivityDemo extends AppCompatActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        applyBackground(R.drawable.denzel);
+        //applyBackground(R.drawable.denzel);
 
     }
 

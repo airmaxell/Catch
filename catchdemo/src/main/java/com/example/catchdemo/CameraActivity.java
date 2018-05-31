@@ -136,6 +136,10 @@ public class CameraActivity extends AppCompatActivity implements
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
         }
+
+
+
+
         fab = findViewById(R.id.take_picture);
         if (fab != null) {
             fab.setOnClickListener(mOnClickListener);
@@ -346,8 +350,11 @@ public class CameraActivity extends AppCompatActivity implements
         return mBackgroundHandler;
     }
 
+
+
     private CameraView.Callback mCallback
             = new CameraView.Callback() {
+
 
         @Override
         public void onCameraOpened(CameraView cameraView) {
@@ -420,8 +427,11 @@ public class CameraActivity extends AppCompatActivity implements
                                 os.close();
                                 // Start AfterActivity
 
-                                getMaskFromServer(file2.getAbsolutePath());
-
+                                //getMaskFromServer(file2.getAbsolutePath());
+                                Intent i = new Intent(CameraActivity.this, AfterActivityDemo.class);
+                                i.putExtra("pathMask", file2.getAbsolutePath());
+                                i.putExtra("pathImage", file2.getAbsolutePath());
+                                startActivity(i);
 
                             } catch (IOException e) {
                                 // Ignore
@@ -472,6 +482,9 @@ public class CameraActivity extends AppCompatActivity implements
             return file;
         }
     };
+
+
+
 
     private void getMaskFromServer(String pathOfImage) {
 
