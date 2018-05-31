@@ -250,7 +250,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             if (success) {
                 //finish();
-                Intent daschActivity = new Intent(LoginActivity.this, CameraActivity.class);
+                Intent daschActivity = new Intent(LoginActivity.this, DaschActivity.class);
                 daschActivity.putExtra(getString(R.string.extra_message_user_id), response);
                 startActivity(daschActivity);
                 finish();

@@ -13,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,11 +33,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.catchdemo.gallery.DetailsFragment;
+import com.example.catchdemo.gallery.ExteriorFragment;
+import com.example.catchdemo.gallery.InteriorFragment;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 
@@ -48,7 +54,11 @@ import java.util.concurrent.ExecutionException;
 
 public class CameraActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
-        AspectRatioFragment.Listener, View.OnClickListener {
+        AspectRatioFragment.Listener, View.OnClickListener,
+        GalleryFragmentDemo.OnFragmentInteractionListener,
+        ExteriorFragment.OnFragmentInteractionListener,
+        InteriorFragment.OnFragmentInteractionListener,
+        DetailsFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "CameraActivity";
 
@@ -61,16 +71,23 @@ public class CameraActivity extends AppCompatActivity implements
 
     private PictureFocusType mPictureFocusType;
 
+    private FrameLayout galleryFrame;
+    private GalleryFragmentDemo galleryFragmentDemo;
+
     private SensorManager sensorManager;
     private Sensor accelerometerSensor;
     private SensorEventListener sensorEventListener;
 
     TextView x, y, z;
 
+    private boolean galleryOpened;
+
     // Interior, Exterior, Details
     private AppCompatImageButton exteriorButton;
     private AppCompatImageButton interiorButton;
     private AppCompatImageButton detailsButton;
+
+    private AppCompatImageButton galleryButton;
 
     private AppCompatImageButton fab;
 
@@ -105,10 +122,11 @@ public class CameraActivity extends AppCompatActivity implements
 
     private Handler mBackgroundHandler;
 
-    private File picturesFolder;
-    private File exteriorFolder;
-    private File interiorFolder;
-    private File detailsFolder;
+    public File picturesFolder;
+    public File exteriorFolder;
+    public File interiorFolder;
+    public File detailsFolder;
+    public File sessionFolder;
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -131,13 +149,12 @@ public class CameraActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_camera);
 
 
-
         mCameraView = (CameraView) findViewById(R.id.camera);
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
         }
 
-
+        galleryOpened = false;
 
 
         fab = findViewById(R.id.take_picture);
@@ -160,20 +177,33 @@ public class CameraActivity extends AppCompatActivity implements
             mPictureFocusType.setPictureType(PictureType.EXTERIOR);
         }
 
+        galleryFrame = findViewById(R.id.frame_layout);
+
         exteriorButton = (AppCompatImageButton) findViewById(R.id.camera_option_exterior);
         interiorButton = (AppCompatImageButton) findViewById(R.id.camera_option_interior);
         detailsButton  = (AppCompatImageButton) findViewById(R.id.camera_option_details);
-
+        galleryButton  = (AppCompatImageButton) findViewById(R.id.btn_gallery);
 
         exteriorButton.setOnClickListener(this);
         interiorButton.setOnClickListener(this);
         detailsButton.setOnClickListener(this);
+        galleryButton.setOnClickListener(this);
+
 
         Log.i(TAG, "--------------- directory_pictures = " + Environment.DIRECTORY_PICTURES);
         picturesFolder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        exteriorFolder = new File(picturesFolder  + File.separator + "exterior");
-        interiorFolder = new File(picturesFolder  + File.separator + "interior");
-        detailsFolder = new File(picturesFolder  + File.separator + "details");
+        // Get from previous activity VIN number
+        String vin = "demo";
+        if(getIntent().getExtras() != null && getIntent().getExtras().containsKey(getString(R.string.extra_message_vin_session))) {
+            vin = getIntent().getExtras().getString(getResources().getString(R.string.extra_message_vin_session));
+        }
+
+        sessionFolder = new File(picturesFolder + File.separator + vin);
+        if(!sessionFolder.exists()) sessionFolder.mkdirs();
+        exteriorFolder = new File(sessionFolder  + File.separator + "exterior");
+        interiorFolder = new File(sessionFolder  + File.separator + "interior");
+        detailsFolder = new File(sessionFolder  + File.separator + "details");
+
         if(!exteriorFolder.exists()) exteriorFolder.mkdirs();
         if(!interiorFolder.exists()) interiorFolder.mkdirs();
         if(!detailsFolder.exists()) detailsFolder.mkdirs();
@@ -212,7 +242,10 @@ public class CameraActivity extends AppCompatActivity implements
     protected void onResume() {
         System.out.println(TAG + " ---------------------------- onResume()");
         super.onResume();
+        galleryFrame.setClickable(false);
+        galleryFrame.setFocusable(false);
 
+        galleryOpened = false;
         sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -260,9 +293,10 @@ public class CameraActivity extends AppCompatActivity implements
     @Override
     protected void onPause() {
         System.out.println(TAG + " ---------------------------- onResume()");
+        closeGallery();
         mCameraView.stop();
-        super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
+        super.onPause();
     }
 
     @Override
@@ -376,8 +410,7 @@ public class CameraActivity extends AppCompatActivity implements
         @Override
         public void onPictureTaken(CameraView cameraView, final byte[] data) {
             Log.i(TAG, "onPictureTaken " + data.length);
-            Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT)
-                    .show();
+            toast("Picture Taken");
             // Hide Take Picture Button
             fab.setClickable(false);
 
@@ -428,10 +461,14 @@ public class CameraActivity extends AppCompatActivity implements
                                 // Start AfterActivity
 
                                 //getMaskFromServer(file2.getAbsolutePath());
+                                toast("Picture Saved!");
+                                fab.setClickable(true);
+                                /*
                                 Intent i = new Intent(CameraActivity.this, AfterActivityDemo.class);
                                 i.putExtra("pathMask", file2.getAbsolutePath());
                                 i.putExtra("pathImage", file2.getAbsolutePath());
                                 startActivity(i);
+                                */
 
                             } catch (IOException e) {
                                 // Ignore
@@ -443,6 +480,7 @@ public class CameraActivity extends AppCompatActivity implements
 
 
         }
+
 
         private void saveImage(Bitmap finalBitmap, String image_name) {
 
@@ -484,7 +522,9 @@ public class CameraActivity extends AppCompatActivity implements
     };
 
 
-
+    private void toast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
 
     private void getMaskFromServer(String pathOfImage) {
 
@@ -558,12 +598,15 @@ public class CameraActivity extends AppCompatActivity implements
 
         switch(pictureType){
             case EXTERIOR:
+                Toast.makeText(this,"Changed to EXTERIOR", Toast.LENGTH_LONG).show();
                 exteriorButton.setImageResource(R.drawable.image_button_exterior_selected);
                 break;
             case INTERIOR:
+                Toast.makeText(this,"Changed to INTERIOR", Toast.LENGTH_LONG).show();
                 interiorButton.setImageResource(R.drawable.image_button_interior);
                 break;
             case DETAILS:
+                Toast.makeText(this,"Changed to DETAILS", Toast.LENGTH_LONG).show();
                 detailsButton.setImageResource(R.drawable.image_button_details);
                 break;
         }
@@ -582,7 +625,71 @@ public class CameraActivity extends AppCompatActivity implements
             case R.id.camera_option_details:
                 changePictureTypeFocus(PictureType.DETAILS);
                 break;
+            case R.id.btn_gallery:
+                testGallery();
+                break;
         }
+    }
+
+    public void testGallery() {
+        galleryOpened = true;
+        galleryFrame.setClickable(true);
+        galleryFrame.setFocusable(true);
+
+
+        mCameraView.stop();
+        sensorManager.unregisterListener(sensorEventListener);
+
+        galleryFragmentDemo = new GalleryFragmentDemo();
+        // Finally , add the fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.frame_layout,galleryFragmentDemo)
+                .commit();
+    }
+
+    public void closeGallery() {
+        if(galleryOpened) {
+
+            sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mCameraView.start();
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+                ConfirmationDialogFragment
+                        .newInstance(R.string.camera_permission_confirmation,
+                                new String[]{Manifest.permission.CAMERA},
+                                REQUEST_CAMERA_PERMISSION,
+                                R.string.camera_permission_not_granted)
+                        .show(getSupportFragmentManager(), FRAGMENT_DIALOG);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CAMERA_PERMISSION);
+            }
+
+            galleryOpened = false;
+            galleryFrame.setFocusable(false);
+            galleryFrame.setClickable(false);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(galleryFragmentDemo).commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(galleryOpened) {
+            closeGallery();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        Log.i(TAG, "------------ uri: " + uri.toString());
     }
 
     public static class ConfirmationDialogFragment extends DialogFragment {

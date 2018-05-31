@@ -61,30 +61,20 @@ public class DaschActivity extends AppCompatActivity {
     private ArrayList<CarItem> requests;
     private ArrayAdapter<CarItem> mArrayAdapter;
 
-    private File picturesFolder;
-    private File exteriorFolder;
-    private File interiorFolder;
-    private File detailsFolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dasch);
 
-        picturesFolder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        exteriorFolder = new File(picturesFolder  + File.separator + "exterior");
-        interiorFolder = new File(picturesFolder  + File.separator + "interior");
-        detailsFolder = new File(picturesFolder  + File.separator + "details");
-        if(!exteriorFolder.exists()) exteriorFolder.mkdirs();
-        if(!interiorFolder.exists()) interiorFolder.mkdirs();
-        if(!detailsFolder.exists()) detailsFolder.mkdirs();
+
 
         requests = new ArrayList<>();
 
         requests.add(new CarItem("BMW x5 fndas jksnf", "KJFJNS83JNFD83JD"));
         requests.add(new CarItem("BMW 530i jdsf ank", "KF93MFJ38FJ389FJ"));
-        requests.add(new CarItem("BMW 530i jdsf ank", "123"));
-        requests.add(new CarItem("BMW 530i jdsf ank", "test_milos"));
+        requests.add(new CarItem("BMW 530i jdsf ank", "PR98EHV02M67DGR6"));
+        requests.add(new CarItem("BMW 530i jdsf ank", "OFH47SRAU47WTV75"));
 
         GetRequests getRequestsAsyncTask = new GetRequests();
         getRequestsAsyncTask.execute((Void)null);
@@ -108,25 +98,9 @@ public class DaschActivity extends AppCompatActivity {
 
     public void startNewSession(String vin){
 
-        // delete previous files
-        if (exteriorFolder.isDirectory() && interiorFolder.isDirectory() && detailsFolder.isDirectory())
-        {
-            String[] children = exteriorFolder.list();
-            for (int i = 0; i < children.length; i++)
-            {
-                new File(exteriorFolder, children[i]).delete();
-            }
-            children = interiorFolder.list();
-            for (int i = 0; i < children.length; i++)
-            {
-                new File(interiorFolder, children[i]).delete();
-            }
-            children = detailsFolder.list();
-            for (int i = 0; i < children.length; i++)
-            {
-                new File(detailsFolder, children[i]).delete();
-            }
-        }
+        Intent cameraActivity = new Intent(DaschActivity.this, CameraActivity.class);
+        cameraActivity.putExtra(getString(R.string.extra_message_vin_session), vin);
+        startActivity(cameraActivity);
     }
 
     private class GetRequests extends AsyncTask<Void, Void, Void> {
@@ -198,6 +172,7 @@ public class DaschActivity extends AppCompatActivity {
                     accept.setVisibility(View.VISIBLE);
                     decline.setVisibility(View.VISIBLE);
 
+
                     accept.animate()
                             .scaleY(1.0f)
                             .setDuration(2000)
@@ -228,9 +203,6 @@ public class DaschActivity extends AppCompatActivity {
 
                             startNewSession(carItem.getVin());
 
-                            Intent cameraActivity = new Intent(DaschActivity.this, CameraActivity.class);
-                            cameraActivity.putExtra(getString(R.string.extra_message_vin_session), carItem.getVin());
-                            startActivity(cameraActivity);
                         }
                     });
                     decline.setOnClickListener(new View.OnClickListener() {
