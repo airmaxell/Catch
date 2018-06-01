@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:padding="0dip"
+                android:layout_height="80dp"
+                android:paddingTop="10dip"
                 android:orientation="vertical"
                 android:background="@color/colorBackground"
                 android:layout_margin="0dp">
@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|top"
         android:textColor="@color/colorText"
         android:text="Top Text"
         android:textSize="15sp"
@@ -22,9 +22,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:textColor="@color/colorText"
-        android:layout_marginBottom="20dip"
         android:layout_alignWithParentIfMissing="true"
         android:text="Bottom Text"
         android:textStyle="bold"
@@ -34,36 +33,40 @@
         android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:layout_below="@id/vin"
+        android:layout_margin="0dp"
         android:layout_marginBottom="0dp"
+        android:baselineAligned="false"
+        android:gravity="bottom"
+        android:orientation="horizontal"
         android:padding="0dp"
+        android:textAlignment="gravity"
         android:weightSum="2">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_decline"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:alpha="0.7"
             android:background="@android:color/holo_red_dark"
             android:text="DECLINE"
-            android:textSize="23dp"
-            android:visibility="gone"
-            android:layout_gravity="bottom"
-            android:alpha="0.8"
-            android:layout_weight="1"/>
+            android:textSize="23dp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_accept"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:alpha="0.7"
             android:background="@android:color/holo_green_dark"
             android:text="ACCEPT"
-            android:textSize="23dp"
-            android:visibility="gone"
-            android:alpha="0.8"
-            android:layout_weight="1"/>
+            android:textSize="23dp" />
     </android.support.v7.widget.LinearLayoutCompat>
 
     <android.support.v7.widget.LinearLayoutCompat
@@ -87,6 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@android:color/holo_green_dark"
+            android:layout_gravity="bottom"
             android:alpha="0.8"
             android:layout_weight="1"/>
     </android.support.v7.widget.LinearLayoutCompat>

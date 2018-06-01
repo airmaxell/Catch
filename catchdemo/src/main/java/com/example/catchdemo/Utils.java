@@ -17,10 +17,16 @@
 package com.example.catchdemo;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Utils {
 
@@ -58,5 +64,20 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    public static List<File> getListFiles(File parentDir) {
+        List<File> inFiles = new ArrayList<>();
+        Queue<File> files = new LinkedList<>();
+        files.addAll(Arrays.asList(parentDir.listFiles()));
+        while (!files.isEmpty()) {
+            File file = files.remove();
+            if (file.isDirectory()) {
+                files.addAll(Arrays.asList(file.listFiles()));
+            } else if (file.getName().endsWith(".jpg") && !file.getName().contains("mask")) {
+                inFiles.add(file);
+            }
+        }
+        return inFiles;
     }
 }

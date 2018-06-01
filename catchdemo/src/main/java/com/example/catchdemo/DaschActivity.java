@@ -18,6 +18,7 @@ package com.example.catchdemo;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -42,6 +43,7 @@ import android.view.animation.Transformation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -172,29 +174,13 @@ public class DaschActivity extends AppCompatActivity {
                     accept.setVisibility(View.VISIBLE);
                     decline.setVisibility(View.VISIBLE);
 
+                    getToggleAnimation(accept, 0, v.getHeight(), 500, 0).start();
+                    getToggleAnimation(decline, 0, v.getHeight(), 500, 0).start();
 
-                    accept.animate()
-                            .scaleY(1.0f)
-                            .setDuration(2000)
-                            .setListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    accept.setVisibility(View.GONE);
-                                    accept.setScaleY(1.0f);
-                                }
-                            });
-                    decline.animate()
-                            .scaleY(1.0f)
-                            .setDuration(2000)
-                            .setListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    decline.setVisibility(View.GONE);
-                                    decline.setScaleY(1.0f);
-                                }
-                            });
+                    getToggleAnimation(accept, v.getHeight(), 0, 500, 2500).start();
+                    getToggleAnimation(decline, v.getHeight(), 0, 500, 2500).start();
+
+
 
                     accept.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -224,6 +210,23 @@ public class DaschActivity extends AppCompatActivity {
             vin.setText(carItem.getVin());
 
             return listItem;
+        }
+
+
+
+        private ValueAnimator getToggleAnimation(final AppCompatButton view , int startHeight , int endHeight, int duration, int startDelay) {
+            ValueAnimator animatorHeight = ValueAnimator.ofInt(startHeight,endHeight);
+            animatorHeight.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    view.getLayoutParams().height = (int)animation.getAnimatedValue();
+                    view.requestLayout();
+                }
+            });
+            //A duration for the whole animation, this can easily become a function parameter if needed.
+            animatorHeight.setDuration(duration);
+            animatorHeight.setStartDelay(startDelay);
+            return animatorHeight;
         }
     }
 

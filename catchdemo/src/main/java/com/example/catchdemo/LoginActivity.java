@@ -16,8 +16,6 @@
 
 package com.example.catchdemo;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -39,9 +37,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -67,11 +65,14 @@ public class LoginActivity extends AppCompatActivity  {
      */
     private UserLoginTask mAuthTask = null;
 
+    private SharedPreferences sharedPreferences;
+
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private View mRegisterView;
     private Activity mActivity;
 
     @Override
@@ -103,8 +104,23 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
+        sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_user_info), Context.MODE_PRIVATE);
         mLoginFormView = findViewById(R.id.login_form);
+        mRegisterView = findViewById(R.id.layout_register);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkUserExists();
+    }
+
+    private void checkUserExists() {
+        boolean user = sharedPreferences.getBoolean(getString(R.string.key_bool_user_logged_in), false);
+        if(user) {
+            int user_id = sharedPreferences.getInt(getString(R.string.key_int_user_id), 0);
+        }
     }
 
     /**
@@ -180,13 +196,27 @@ public class LoginActivity extends AppCompatActivity  {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+            mLoginFormView.animate()
+                    .setDuration(shortAnimTime)
+                    .alpha(show ? 0 : 1)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                        }
+                    });
+
+            mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mRegisterView.animate()
+                    .setDuration(shortAnimTime)
+                    .alpha(show ? 0 : 1)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
+                        }
+                    });
+
 
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
@@ -196,6 +226,7 @@ public class LoginActivity extends AppCompatActivity  {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+
     }
 
     protected void storeId(String id) {
@@ -234,6 +265,7 @@ public class LoginActivity extends AppCompatActivity  {
                 response = Utils.getResponseText(link);
             } catch (IOException e) {
                 e.printStackTrace();
+                makeToast(getString(R.string.toast_error_connection));
             }
 
             Log.i("LoginActivity", "--------------- link: " + link);
@@ -264,9 +296,14 @@ public class LoginActivity extends AppCompatActivity  {
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+
+            makeToast(getString(R.string.toast_error_connection));
         }
 
 
+    }
+    public void makeToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {

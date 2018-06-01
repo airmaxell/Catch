@@ -66,5 +66,9 @@
     <string name="extra_message_vin_session">em_session_vin</string>
     <string name="api_server">http://api.catch-ai.com</string>
     <string name="button_log_in">Log in</string>
+    <string name="toast_error_connection">Error with communication!</string>
+    <string name="shared_preference_user_info">sp_user_info</string>
+    <string name="key_bool_user_logged_in">sp_key_user_logged_in</string>
+    <string name="key_int_user_id">sp_key_user_id</string>
 
 </resources>

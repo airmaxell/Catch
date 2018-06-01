@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.example.catchdemo.CameraActivity;
 import com.example.catchdemo.R;
+import com.example.catchdemo.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class ExteriorFragment extends Fragment {
         selectedImage = (AppCompatImageView) view.findViewById(R.id.exterior_image_selected);
 
         CameraActivity cameraActivity = (CameraActivity)getActivity();
-        exteriorImagesList = getListFiles(cameraActivity.exteriorFolder);
+        exteriorImagesList = Utils.getListFiles(cameraActivity.exteriorFolder);
         for(File image : exteriorImagesList) {
             layoutImages.addView(getViewFromFile(image));
         }
@@ -179,18 +180,4 @@ public class ExteriorFragment extends Fragment {
     }
 
 
-    private List<File> getListFiles(File parentDir) {
-        List<File> inFiles = new ArrayList<>();
-        Queue<File> files = new LinkedList<>();
-        files.addAll(Arrays.asList(parentDir.listFiles()));
-        while (!files.isEmpty()) {
-            File file = files.remove();
-            if (file.isDirectory()) {
-                files.addAll(Arrays.asList(file.listFiles()));
-            } else if (file.getName().endsWith(".jpg") && !file.getName().contains("mask")) {
-                inFiles.add(file);
-            }
-        }
-        return inFiles;
-    }
 }

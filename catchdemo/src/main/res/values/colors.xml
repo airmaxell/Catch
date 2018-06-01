@@ -27,4 +27,8 @@
     <color name="edit_text_fill">#ffffff</color>
     <color name="edit_text_border">#e6e6e6</color>
     <color name="black">#000000</color>
+
+
+    <color name="colorBlue">#739af4</color>
+
 </resources>
