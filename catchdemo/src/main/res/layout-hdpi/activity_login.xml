@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="0dp"
+    android:layout_gravity="center"
+    tools:context=".LoginActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ic_login_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    R<android.support.v7.widget.AppCompatImageView
+        android:id="@+id/logo"
+        android:layout_width="238dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginRight="61dp"
+        app:srcCompat="@drawable/ic_login_logo" />
+
+    <!--
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/logo"
+        android:layout_width="160dp"
+        android:layout_height="168dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        app:srcCompat="@drawable/ic_login_logo" />
+
+    -->
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/text_catch"
+        android:layout_width="275dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginRight="43dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_login_catch_text" />
+
+    <com.example.catchdemo.Utilities.HorizontalDottedProgress
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        />
+
+    <!--
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="238dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginRight="61dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_login_loading" />
+
+    -->
+    <!-- Login progress -->
+    <com.example.catchdemo.Utilities.HorizontalDottedProgress
+        android:id="@+id/login_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:translationX="1000dp"
+        android:layout_marginEnd="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="63dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginTop="74dp"
+            android:background="@drawable/ic_login_edittext_bg"
+            android:fontFamily="@font/montserrat_light"
+            android:gravity="bottom"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingBottom="6dp"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:hint="Your Email"
+            android:text="example@gmail.com"
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"/>
+
+        <com.example.catchdemo.Utilities.CustomEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="63dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginTop="48dp"
+            android:textSize="18sp"
+            android:background="@drawable/ic_login_edittext_bg"
+            android:fontFamily="@font/montserrat_light"
+            android:gravity="bottom"
+            android:hint="Your Password"
+            android:text="123456789"
+            android:textColorHint="@color/colorText"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingBottom="6dp"
+            android:singleLine="true"
+            android:textColor="@color/colorText"
+            android:paddingRight="10dp"
+            android:drawableRight="@drawable/ic_login_forgot_passwrd"
+            />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/email_sign_in_button"
+        android:translationY="400dp"
+        android:layout_width="263dp"
+        android:layout_height="53dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="74dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginEnd="48dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/montserrat_light"
+        android:gravity="center"
+        android:text="@string/button_log_in"
+        android:textAllCaps="false"
+        android:src="@drawable/ic_login_btn_login"
+        android:scaleType="fitXY"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:id="@+id/layout_register"
+        android:translationY="400dp"
+        android:padding="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_light"
+            android:text="Don't have an account?"/>
+
+        <TextView
+            android:id="@+id/register"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textColor="@color/colorText"
+            android:fontFamily="@font/montserrat_light"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="Sign Up"/>
+
+    </LinearLayout>
+
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
