@@ -18,10 +18,11 @@
 <resources>
     <color name="colorPrimary">#101c28</color>
     <color name="colorPrimaryDark">#101c28</color>
-    <color name="colorAccent">#ecf3ca</color>
+    <color name="colorPrimary2">#5e7780</color>
+    <color name="colorAccent">#ff0944</color>
     <color name="colorSecond">#3aafa9</color>
     <color name="colorBackground">#f9f9f9</color>
-    <color name="colorText">#4e4e4e</color>
+    <color name="colorText">#d8d8d8</color>
     <color name="colorHeading">#e6e6e6</color>
 
     <color name="edit_text_fill">#ffffff</color>

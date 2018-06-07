@@ -18,30 +18,50 @@ package com.example.catchdemo;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.Transformation;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.catchdemo.Utilities.AnimationUtilities;
+import com.example.catchdemo.Utilities.CustomEditText;
+import com.example.catchdemo.Utilities.DrawableClickListener;
+import com.example.catchdemo.Utilities.HorizontalDottedProgress;
+
 import java.io.IOException;
+
+import static com.example.catchdemo.Utilities.AnimationUtilities.getAlphaAnimation;
 
 /**
  * A login screen that offers login via email/password.
@@ -69,11 +89,13 @@ public class LoginActivity extends AppCompatActivity  {
 
     // UI references.
     private EditText mEmailView;
-    private EditText mPasswordView;
-    private View mProgressView;
+    private CustomEditText mPasswordView;
+    private HorizontalDottedProgress mProgressView;
     private View mLoginFormView;
     private View mRegisterView;
     private Activity mActivity;
+
+    private AppCompatImageButton mEmailSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +105,7 @@ public class LoginActivity extends AppCompatActivity  {
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (CustomEditText) findViewById(R.id.password);
         mPasswordView.setTransformationMethod(new AsteriskPasswordTransformationMethod());
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -96,7 +118,20 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
-        AppCompatButton mEmailSignInButton = (AppCompatButton) findViewById(R.id.email_sign_in_button);
+        mPasswordView.setDrawableClickListener(new DrawableClickListener() {
+            @Override
+            public void onClick(DrawablePosition target) {
+                switch (target) {
+                    case RIGHT:
+                        makeToast("Forgot Password");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        mEmailSignInButton = (AppCompatImageButton) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,11 +152,91 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void checkUserExists() {
+
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showLogin();
+            }
+        }, 3000);
+
+
+        /*
         boolean user = sharedPreferences.getBoolean(getString(R.string.key_bool_user_logged_in), false);
         if(user) {
             int user_id = sharedPreferences.getInt(getString(R.string.key_int_user_id), 0);
+        } else {
+            showLogin();
         }
+        */
     }
+
+    private void showLogin() {
+
+        final LinearLayout login = findViewById(R.id.login_form);
+
+        AppCompatImageView logo = findViewById(R.id.logo);
+
+        final float scale = getResources().getDisplayMetrics().density;
+        int dpWidthInPx  = (int) (160 * scale);
+        int dpHeightInPx = (int) (168 * scale);
+        int dpMarginTopInPx = (int) (47 * scale);
+
+        AnimationUtilities.getHeightAnimation(logo, logo.getLayoutParams().height, dpHeightInPx, 500, 400).start();
+        AnimationUtilities.getWidthAnimation(logo, logo.getLayoutParams().width, dpWidthInPx, 500, 400).start();
+        AnimationUtilities.getMarginTopAnimation(logo, ((ViewGroup.MarginLayoutParams)logo.getLayoutParams()).topMargin, dpMarginTopInPx, 500, 400).start();
+
+        final AppCompatImageView textCatch = findViewById(R.id.text_catch);
+        getAlphaAnimation(textCatch, 0.0f, 100, 0).start();
+
+        final com.example.catchdemo.Utilities.HorizontalDottedProgress loadings = findViewById(R.id.loading);
+        ValueAnimator va = getAlphaAnimation(loadings, 0.0f, 100, 0);
+
+        va.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                textCatch.setVisibility(View.GONE);
+                loadings.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        va.start();
+
+        AnimationUtilities.getScaleXAnimation(login, 1000.0f, 0.0f, 500, 1000).start();
+
+        AnimationUtilities.getScaleYAnimation(mEmailSignInButton, 600.0f, 0.0f, 500, 1000).start();
+
+
+        LinearLayout layoutRegister = findViewById(R.id.layout_register);
+
+        AnimationUtilities.getScaleYAnimation(layoutRegister, 600.0f, 0.0f, 600, 1200).start();
+
+
+
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+
+        InputMethodManager inputMethodManager = (InputMethodManager)activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -132,6 +247,8 @@ public class LoginActivity extends AppCompatActivity  {
         if (mAuthTask != null) {
             return;
         }
+
+        hideSoftKeyboard(this);
 
         // Reset errors.
         mEmailView.setError(null);
@@ -217,14 +334,25 @@ public class LoginActivity extends AppCompatActivity  {
                         }
                     });
 
+            mEmailSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
+            mEmailSignInButton.animate()
+                    .setDuration(shortAnimTime)
+                    .alpha(show ? 0 : 1)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mEmailSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
+                        }
+                    });
+
 
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                        }
             });
 
     }
@@ -328,5 +456,7 @@ public class LoginActivity extends AppCompatActivity  {
             }
         }
     };
+
+
 }
 

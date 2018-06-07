@@ -167,7 +167,7 @@ public class DaschActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Log.i(TAG, "--------------------- Clicked on item: " + carItem.getVin());
 
-                    // Animation
+                    // AnimationUtilities
                     final AppCompatButton accept = v.findViewById(R.id.button_accept);
                     final AppCompatButton decline = v.findViewById(R.id.button_decline);
 
